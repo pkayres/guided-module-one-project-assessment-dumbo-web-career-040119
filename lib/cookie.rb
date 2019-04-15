@@ -1,2 +1,4 @@
 class Cookie < ActiveRecord::Base
-end 
+  has_many :reviews
+  has_many :user, through: :reviews
+end
