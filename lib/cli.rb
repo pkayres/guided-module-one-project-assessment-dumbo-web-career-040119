@@ -6,9 +6,7 @@ class CommandLineInterface
 def run
   greet
   list_inputs
-
 end
-
 
 
 def greet
@@ -40,6 +38,7 @@ def list_inputs
       option_6
     elsif user_says == "G"
       option_7
+
     else
       puts "#{user_says} is not a invalid input try again!"
       list_inputs
@@ -53,7 +52,7 @@ def something_else?
       list_inputs
   elsif user_response_for_next_step == "no"
     puts "Thanks for reviewing your cookie with us!"
-  else user_response_for_next_step == nil
+  else
     puts "#{user_response_for_next_step} is not a invalid input try again!"
     something_else?
   end
@@ -70,8 +69,13 @@ def option_2
   puts "What's your last name?"
     user_response = gets.chomp.capitalize
     finding_user = User.find_by(last_name: user_response)
+    if finding_user != nil
       finding_user.reviews.each do |review|
-      puts "#{review.id}. Review: #{review.review}"
+        puts "#{review.id}. Review: #{review.review}"
+      end
+    else
+      puts "Sorry invalid response, try again!"
+      option_2
     end
     something_else?
 end
@@ -83,7 +87,7 @@ def option_3
       finding_user.reviews.all.map do |review|
        puts "#{review.id}. Review: #{review.review} Rating: #{review.rating}"
     end
-    something_else?
+     something_else?
 end
 
 def option_4
@@ -111,7 +115,6 @@ def option_5
   puts "What's your last name?"
     user_response = gets.chomp.capitalize
     finding_user = User.find_by(last_name: user_response)
-    binding.pry
     id = []
   puts "Which review would you like to edit?(enter review number)"
       finding_user.reviews.each do |review|
@@ -126,6 +129,7 @@ def option_5
           changed_review.update(review: user_review_edit)
        puts "All set!"
      end
+     something_else?
 end
 
 def option_6
@@ -168,8 +172,7 @@ def valid_rating?(user_instance,cookie_instance,cookie_review,cookie_rating)
      something_else?
    else
      invalid_rating?(user_instance,cookie_instance,cookie_review,cookie_rating)
-end
-
+   end
 
 
 
