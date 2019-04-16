@@ -67,7 +67,7 @@ def option_2
     user_response = gets.chomp
     finding_user = User.find_by(last_name: user_response)
       finding_user.reviews.all.map do |review|
-      puts review.review
+      puts "#{review.id}. Review: #{review.review}"
     end
     something_else?
 end
@@ -77,7 +77,7 @@ def option_3
     user_response = gets.chomp
     finding_user = User.find_by(last_name: user_response)
       finding_user.reviews.all.map do |review|
-       puts review.rating
+       puts "#{review.id}. Review: #{review.review} Rating: #{review.rating}"
     end
     something_else?
 end
@@ -107,20 +107,20 @@ def option_5
   puts "What's your last name?"
     user_response = gets.chomp.capitalize
     finding_user = User.find_by(last_name: user_response)
-      finding_user.reviews.all.map do |review|
-      puts review.review
-
-  end
-
-    # matching_user = User.all.select do |user|
-    #   user.last_name == user_response
-    # end
-    #   Review.all.map do |review|
-    #     review.review == matching_user
-    #     binding.pry
-    #
-    #   end
+    id = []
+      finding_user.reviews.all.each do |review|
+        id << "#{review.id}"
+      end
+      puts "Which review would you like to edit?(enter review number)"
+          user_review_number = gets.chomp
+        if id.include?(user_review_number)
+        puts "Let's change it! Type in what you'd like instead."
+          user_review_edit = gets.chomp
+          changed_review = Review.where("id=?",user_review_number)
+       changed_review.update(review: user_review_edit)
+     end
 end
+
 
 
 def option_6

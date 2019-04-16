@@ -20,4 +20,5 @@ snicker_doodle = Cookie.create(name:"Snickerdoodle", description: "a soft cinnam
 Review.create(user_id: michelle.id, cookie_id: choco_chip.id, review:"This was AMAZZZZING!", rating:10)
 Review.create(user_id: monkey.id, cookie_id: oreo.id, review:"Ooo Ooo Ooo AHH AHH AHH!", rating:4)
 Review.create(user_id: robin.id, cookie_id: macadamia_nut.id, review:"Eh I've had better...", rating:3)
+Review.create(user_id: robin.id, cookie_id: oreo.id, review:"Love me some Oreo's!", rating:10)
 Review.create(user_id: dane.id, cookie_id: snicker_doodle.id, review:"A bit salty for my taste, but good!", rating:7)
