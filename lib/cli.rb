@@ -6,6 +6,7 @@ class CommandLineInterface
 def run
   greet
   list_inputs
+
 end
 
 
@@ -21,7 +22,8 @@ def list_inputs
   puts "Press C to see a your ratings for your cookies"
   puts "Press D to write your own cookie review!"
   puts "Press E to edit your review"
-  puts "Press F to exit Cookie Grades"
+  puts "Press F to delete your review"
+  puts "Press G to exit Cookie Grades"
 
   user_says = gets.chomp.upcase
     if user_says == "A"
@@ -36,6 +38,8 @@ def list_inputs
       option_5
     elsif user_says == "F"
       option_6
+    elsif user_says == "G"
+      option_7
     else
       puts "#{user_says} is not a invalid input try again!"
       list_inputs
@@ -44,7 +48,7 @@ end
 
 def something_else?
   puts "Would you like to do something else?(yes/no)"
-  user_response_for_next_step = gets.chomp.downcase
+  user_response_for_next_step = gets.chomp
   if user_response_for_next_step == "yes"
       list_inputs
   elsif user_response_for_next_step == "no"
@@ -64,9 +68,9 @@ end
 
 def option_2
   puts "What's your last name?"
-    user_response = gets.chomp
+    user_response = gets.chomp.capitalize
     finding_user = User.find_by(last_name: user_response)
-      finding_user.reviews.all.map do |review|
+      finding_user.reviews.each do |review|
       puts "#{review.id}. Review: #{review.review}"
     end
     something_else?
@@ -74,7 +78,7 @@ end
 
 def option_3
   puts "What's your last name?"
-    user_response = gets.chomp
+    user_response = gets.chomp.capitalize
     finding_user = User.find_by(last_name: user_response)
       finding_user.reviews.all.map do |review|
        puts "#{review.id}. Review: #{review.review} Rating: #{review.rating}"
@@ -107,23 +111,44 @@ def option_5
   puts "What's your last name?"
     user_response = gets.chomp.capitalize
     finding_user = User.find_by(last_name: user_response)
+    binding.pry
     id = []
-      finding_user.reviews.all.each do |review|
+  puts "Which review would you like to edit?(enter review number)"
+      finding_user.reviews.each do |review|
         id << "#{review.id}"
+        puts "#{review.id}. Review: #{review.review}"
       end
-      puts "Which review would you like to edit?(enter review number)"
           user_review_number = gets.chomp
         if id.include?(user_review_number)
-        puts "Let's change it! Type in what you'd like instead."
+          puts "Let's change it! Type in what you'd like instead."
           user_review_edit = gets.chomp
           changed_review = Review.where("id=?",user_review_number)
-       changed_review.update(review: user_review_edit)
+          changed_review.update(review: user_review_edit)
+       puts "All set!"
      end
 end
 
-
-
 def option_6
+  puts "What's your last name?"
+    user_response = gets.chomp.capitalize
+    finding_user = User.find_by(last_name: user_response)
+      id = []
+  puts "Which review would you like to delete?(enter review number)"
+    finding_user.reviews.each do |review|
+      id << "#{review.id}"
+  puts "#{review.id}. Review: #{review.review}"
+    end
+      user_review_number = gets.chomp
+        if id.include?(user_review_number)
+  puts "Cool! Consider it done!"
+      user_review_match = Review.where("id=?",user_review_number)
+      user_review_match.destroy_all
+   something_else?
+ end
+
+end
+
+def option_7
   puts "Thanks for stopping by!"
 end
 
