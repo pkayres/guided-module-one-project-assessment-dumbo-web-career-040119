@@ -17,10 +17,10 @@ end
 
 def list_inputs
   puts "Press A to see a list of cookies!"
-  puts "Press B to see a list of reviews for cookies"
-  puts "Press C to see a list of ratings for the cookies"
+  puts "Press B to see your reviews for your cookies"
+  puts "Press C to see a your ratings for your cookies"
   puts "Press D to write your own cookie review!"
-  puts "Press E to delete your review"
+  puts "Press E to edit your review"
   puts "Press F to exit Cookie Grades"
 
   user_says = gets.chomp.upcase
@@ -63,27 +63,35 @@ def option_1
 end
 
 def option_2
-    Review.all.select do |review|
-      puts "#{review.cookie.name}: #{review.review}"
+  puts "What's your last name?"
+    user_response = gets.chomp
+    finding_user = User.find_by(last_name: user_response)
+      finding_user.reviews.all.map do |review|
+      puts review.review
     end
     something_else?
 end
 
 def option_3
-    Review.all.map do |review|
-      puts "#{review.cookie.name} has a rating of: #{review.rating}"
+  puts "What's your last name?"
+    user_response = gets.chomp
+    finding_user = User.find_by(last_name: user_response)
+      finding_user.reviews.all.map do |review|
+       puts review.rating
     end
     something_else?
 end
 
 def option_4
-    puts "What's your name?"
-      user_name = gets.chomp
-    puts "Welcome #{user_name}!"
-      user_instance = User.create(name: user_name)
+    puts "What's your first name?"
+      user_first_name = gets.chomp.capitalize
+    puts "Welcome #{user_first_name}!"
+    puts "What's your last name?"
+      user_last_name = gets.chomp.capitalize
+       user_instance = User.create(first_name: user_first_name, last_name: user_last_name)
     puts "What's the name of your cookie?"
       cookie_name = gets.chomp
-    puts "Describe the #{cookie_name} to us, what's it like?"
+    puts "Give a description of the #{cookie_name} to us, what's in it?"
       cookie_description = gets.chomp
       cookie_instance = Cookie.create(name: cookie_name, description: cookie_description)
     puts "Great!"
@@ -93,6 +101,30 @@ def option_4
       cookie_rating = gets.chomp
       valid_rating?(user_instance,cookie_instance,cookie_review,cookie_rating)
     end
+end
+
+def option_5
+  puts "What's your last name?"
+    user_response = gets.chomp.capitalize
+    finding_user = User.find_by(last_name: user_response)
+      finding_user.reviews.all.map do |review|
+      puts review.review
+
+  end
+
+    # matching_user = User.all.select do |user|
+    #   user.last_name == user_response
+    # end
+    #   Review.all.map do |review|
+    #     review.review == matching_user
+    #     binding.pry
+    #
+    #   end
+end
+
+
+def option_6
+  puts "Thanks for stopping by!"
 end
 
 
@@ -112,6 +144,8 @@ def valid_rating?(user_instance,cookie_instance,cookie_review,cookie_rating)
    else
      invalid_rating?(user_instance,cookie_instance,cookie_review,cookie_rating)
 end
+
+
 
 
 end

@@ -4,10 +4,10 @@ User.destroy_all
 
 
 
-michelle = User.create(name:"Michelle")
-monkey = User.create(name:"Monkey")
-robin = User.create(name:"Robin")
-dane = User.create(name:"Dane")
+michelle = User.create(first_name:"Michelle", last_name:"Budzyna")
+monkey = User.create(first_name:"Monkey", last_name:"Banana")
+robin = User.create(first_name:"Robin", last_name:"Ayres")
+dane = User.create(first_name:"Dane", last_name:"Ayres")
 
 
 choco_chip = Cookie.create(name:"Chocolate Chip", description:"Chunks of Chocolate with nuts")
